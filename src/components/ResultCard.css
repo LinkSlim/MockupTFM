@@ -24,6 +24,8 @@
   width: 100%;
   border-right: 1px solid var(--color-border);
   background: #000;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (min-width: 600px) {
@@ -147,4 +149,72 @@
 .reset-btn {
   width: 100%;
   justify-content: center;
+}
+
+/* XAI Simulation Styles */
+.image-view-toggle {
+  display: flex;
+  background: var(--color-bg-base);
+  padding: 0.5rem;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.toggle-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--color-text-muted);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.toggle-btn.active {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-main);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.xai-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Grid de pixeles + Colores vivos para el mapa de calor */
+  background: 
+    repeating-linear-gradient(to right, transparent, transparent 18px, rgba(0, 0, 0, 0.5) 18px, rgba(0, 0, 0, 0.5) 20px),
+    repeating-linear-gradient(to bottom, transparent, transparent 18px, rgba(0, 0, 0, 0.5) 18px, rgba(0, 0, 0, 0.5) 20px),
+    radial-gradient(circle at 50% 50%, rgba(255, 0, 0, 0.95) 0%, rgba(255, 165, 0, 0.85) 25%, rgba(255, 255, 0, 0.7) 45%, rgba(0, 255, 0, 0.3) 70%, transparent 90%);
+  mix-blend-mode: hard-light;
+  pointer-events: none;
+  /* Animación con 'steps' para imitar un renderizado por bloques pixelados */
+  animation: pulse-heatmap 1.5s infinite alternate steps(5);
+}
+
+@keyframes pulse-heatmap {
+  from { opacity: 0.75; transform: scale(1); }
+  to { opacity: 1; transform: scale(1.03); }
 }

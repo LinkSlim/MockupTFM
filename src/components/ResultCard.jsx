@@ -1,8 +1,10 @@
-import React from 'react';
-import { ShieldAlert, CheckCircle, AlertTriangle, RefreshCw } from 'lucide-react';
+import React, { useState } from 'react';
+import { ShieldAlert, CheckCircle, AlertTriangle, RefreshCw, Eye, Sparkles } from 'lucide-react';
 import './ResultCard.css';
 
 export default function ResultCard({ result, image, onReset }) {
+  const [viewMode, setViewMode] = useState('original'); // 'original' | 'xai'
+
   // result = { type: 'Melanoma', confidence: 0.92, riskLevel: 'high' }
 
   const getRiskDetails = (level) => {
@@ -27,7 +29,27 @@ export default function ResultCard({ result, image, onReset }) {
 
       <div className="result-content">
         <div className="result-image-box">
-          <img src={image} alt="Lesión analizada" className="result-image" />
+          <div className="image-view-toggle">
+            <button 
+              className={`toggle-btn ${viewMode === 'original' ? 'active' : ''}`}
+              onClick={() => setViewMode('original')}
+            >
+              <Eye size={16} /> Original
+            </button>
+            <button 
+              className={`toggle-btn ${viewMode === 'xai' ? 'active' : ''}`}
+              onClick={() => setViewMode('xai')}
+            >
+              <Sparkles size={16} /> Análisis XAI
+            </button>
+          </div>
+          
+          <div className="image-wrapper">
+            <img src={image} alt="Lesión analizada" className="result-image" />
+            {viewMode === 'xai' && (
+              <div className="xai-overlay"></div>
+            )}
+          </div>
         </div>
         
         <div className="result-details">
